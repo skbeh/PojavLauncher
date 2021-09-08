@@ -67,7 +67,7 @@ public class BaseMainActivity extends LoggableActivity {
                     if(LauncherPreferences.PREF_DISABLE_GESTURES) break;
                     int x = CallbackBridge.mouseX;
                     int y = CallbackBridge.mouseY;
-                    if (CallbackBridge.isGrabbing() &&
+                    if (// CallbackBridge.isGrabbing() &&
                             Math.abs(initialX - x) < fingerStillThreshold &&
                             Math.abs(initialY - y) < fingerStillThreshold) {
                         triggeredLeftMouseButton = true;
@@ -380,8 +380,8 @@ public class BaseMainActivity extends LoggableActivity {
                                 // It cause hold left mouse while moving camera
                                 initialX = mouse_x;
                                 initialY = mouse_y;
-                                if(!isTouchInHotbar) theHandler.sendEmptyMessageDelayed(BaseMainActivity.MSG_LEFT_MOUSE_BUTTON_CHECK, LauncherPreferences.PREF_LONGPRESS_TRIGGER);
                             }
+                            if(!isTouchInHotbar) theHandler.sendEmptyMessageDelayed(BaseMainActivity.MSG_LEFT_MOUSE_BUTTON_CHECK, LauncherPreferences.PREF_LONGPRESS_TRIGGER);
                             break;
 
                         case MotionEvent.ACTION_UP: // 1
@@ -405,6 +405,8 @@ public class BaseMainActivity extends LoggableActivity {
                                     sendKeyPress(LWJGLGLFWKeycode.GLFW_KEY_Q, 0, false);
                                     theHandler.removeMessages(MSG_DROP_ITEM_BUTTON_CHECK);
                                 }
+                            } else {
+                                theHandler.removeMessages(BaseMainActivity.MSG_LEFT_MOUSE_BUTTON_CHECK);
                             }
 
                             break;
